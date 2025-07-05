@@ -1,50 +1,854 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Refer & Earn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Daily Earning545 - Premium Earning Platform</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; background: #f1f2f6; }
-    header { background: #2ecc71; color: white; padding: 20px; text-align: center; position: relative; }
-    .notification { position: absolute; right: 20px; top: 20px; cursor: pointer; }
-    .notification::after {
-      content: '1'; position: absolute; top: -8px; right: -8px;
-      background: red; color: white; border-radius: 50%; width: 16px; height: 16px;
-      text-align: center; font-size: 12px; line-height: 16px;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    .notice-box { display: none; background: #fff3cd; padding: 10px; margin: 10px; border-radius: 5px; }
-    .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 10px; }
-    .balance-box { background: #ecf0f1; padding: 15px; border-radius: 10px; text-align: center; color: #27ae60; font-size: 20px; margin-bottom: 15px; }
-    .btn {
-      background: #27ae60; color: white; padding: 10px 15px; border: none;
-      border-radius: 5px; margin: 5px 5px 0 0; cursor: pointer;
+    
+    :root {
+      --primary: #4361ee;
+      --primary-dark: #3a56d4;
+      --secondary: #4cc9f0;
+      --success: #4ade80;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --dark: #1e293b;
+      --light: #f8fafc;
+      --gray: #94a3b8;
+      --card-bg: #ffffff;
+      --body-bg: #f1f5f9;
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      --transition: all 0.3s ease;
     }
-    .btn-purple { background: #8e44ad; float: right; }
-    .btn-signup { background: #f39c12; }
-    .copy-add-wrap { display: flex; gap: 10px; }
+    
+    body {
+      background-color: var(--body-bg);
+      color: var(--dark);
+      padding-bottom: 80px;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    }
+    
+    /* Header Styles */
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    header .title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+    
+    header .title i {
+      font-size: 1.5rem;
+    }
+    
+    header .balance-display {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 6px 12px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      color: white;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    /* Profile Section */
+    .profile-container {
+      position: relative;
+      padding: 20px 0 40px;
+      overflow: hidden;
+    }
+    
+    .profile-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      z-index: 0;
+      border-radius: 0 0 30px 30px;
+    }
+    
+    .profile {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .profile-img-container {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 15px;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      box-shadow: var(--shadow);
+    }
+    
+    .profile img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin: 5px 0;
+      color: white;
+    }
+    
+    .balance-label {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.9rem;
+    }
+    
+    .usd {
+      font-size: 1.8rem;
+      margin: 10px 0 15px;
+      color: white;
+      font-weight: 800;
+    }
+    
+    .referral-info {
+      background: var(--card-bg);
+      border-radius: 15px;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      box-shadow: var(--shadow);
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    
+    .ref-item {
+      text-align: center;
+      padding: 0 10px;
+    }
+    
+    .ref-value {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+    
+    .ref-label {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+    
+    /* Card Styles */
+    .card {
+      background: var(--card-bg);
+      margin: 15px;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 5px;
+      width: 100%;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+    }
+    
+    .card-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      gap: 10px;
+    }
+    
+    .card-header i {
+      width: 40px;
+      height: 40px;
+      background: rgba(67, 97, 238, 0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      font-size: 1.2rem;
+    }
+    
+    .card-header h3 {
+      font-size: 1.1rem;
+      color: var(--dark);
+    }
+    
+    .card-content {
+      padding: 5px 0;
+    }
+    
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    
+    .info-row:last-child {
+      border-bottom: none;
+    }
+    
+    .info-label {
+      font-weight: 500;
+      color: var(--gray);
+    }
+    
+    .info-value {
+      font-weight: 700;
+      color: var(--dark);
+    }
+    
+    .progress-container {
+      margin-top: 20px;
+    }
+    
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    
+    .progress {
+      height: 12px;
+      background: #e2e8f0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      border-radius: 10px;
+      transition: var(--transition);
+    }
+    
+    /* Button Styles */
+    .button {
+      display: block;
+      width: 100%;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+      padding: 15px;
+      text-align: center;
+      border-radius: 15px;
+      margin-top: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 10px rgba(67, 97, 238, 0.3);
+      border: none;
+      font-size: 1rem;
+    }
+    
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(67, 97, 238, 0.4);
+    }
+    
+    .button-secondary {
+      background: white;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      box-shadow: none;
+    }
+    
+    .button-secondary:hover {
+      background: #f8fafc;
+      transform: none;
+    }
+    
+    /* Input Styles */
+    .input-group {
+      margin-bottom: 15px;
+    }
+    
+    .input-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--dark);
+    }
+    
     input, select {
-      width: 100%; padding: 10px; margin-top: 10px;
-      border: 1px solid #ccc; border-radius: 6px;
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 1rem;
+      background: #f8fafc;
+      transition: var(--transition);
     }
-    .share-note { margin-top: 15px; background: #dfe6e9; padding: 10px; border-radius: 6px; }
-    .share-buttons { margin-top: 15px; display: flex; flex-wrap: wrap; gap: 10px; }
-    .share-buttons a {
-      flex: 1 1 48%; background: #3498db; color: white; padding: 10px;
-      text-align: center; border-radius: 5px; text-decoration: none;
+    
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
     }
-    .form-section, .signup-form { display: none; margin-top: 20px; position: relative; }
-    .form-close {
-      position: absolute; top: -10px; right: -10px;
-      background: red; color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer;
+    
+    /* Navigation */
+    .nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-around;
+      background: var(--card-bg);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+      padding: 10px 0;
+      z-index: 100;
     }
-    .success { color: green; text-align: center; margin-top: 10px; }
+    
+    .nav-item {
+      text-align: center;
+      font-size: 0.7rem;
+      cursor: pointer;
+      color: var(--gray);
+      transition: var(--transition);
+      width: 70px;
+    }
+    
+    .nav-icon {
+      width: 24px;
+      height: 24px;
+      margin: 0 auto 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f1f5f9;
+      border-radius: 10px;
+      padding: 12px;
+      transition: var(--transition);
+    }
+    
+    .nav-item.active {
+      color: var(--primary);
+      font-weight: 600;
+    }
+    
+    .nav-item.active .nav-icon {
+      background: rgba(67, 97, 238, 0.1);
+      color: var(--primary);
+    }
+    
+    .nav-label {
+      font-size: 0.75rem;
+    }
+    
+    /* Task Counter */
+    .task-counter {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px 0;
+    }
+    
+    .counter-item {
+      text-align: center;
+      background: #f8fafc;
+      border-radius: 15px;
+      padding: 15px;
+      flex: 1;
+      margin: 0 5px;
+    }
+    
+    .counter-value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    
+    .counter-label {
+      font-size: 0.8rem;
+      color: var(--gray);
+      margin-top: 5px;
+    }
+    
+    /* Responsive */
+    @media (min-width: 768px) {
+      .cards-container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin: 15px;
+      }
+      
+      .card {
+        margin: 0;
+      }
+      
+      .profile {
+        max-width: 600px;
+      }
+    }
   </style>
 </head>
 <body>
-<!-- Body content -->
-<script>
-// JavaScript content
-</script>
+  <header>
+    <div class="title">
+      <i class="fas fa-robot"></i>
+      <span>Daily Earning545</span>
+    </div>
+    <div class="balance-display">
+      <i class="fas fa-wallet"></i>
+      <span id="header-balance">$0.000</span>
+    </div>
+  </header>
+  
+  <div class="profile-container">
+    <div class="profile">
+      <div class="profile-img-container">
+        <img src="https://i.ibb.co/6R45cM6C/Polish-20250529-015530961.jpg" alt="Profile">
+      </div>
+      <div class="name" id="username">Username</div>
+      <div class="balance-label">Total Balance</div>
+      <div class="usd" id="usd-balance">USD $0.000</div>
+      
+      <div class="referral-info">
+        <div class="ref-item">
+          <div class="ref-value" id="ref-count">0</div>
+          <div class="ref-label">Referrals</div>
+        </div>
+        <div class="ref-item">
+          <div class="ref-value" id="completed">0</div>
+          <div class="ref-label">Completed</div>
+        </div>
+        <div class="ref-item">
+          <div class="ref-value" id="remaining">100</div>
+          <div class="ref-label">Remaining</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="cards-container">
+    <div class="card">
+      <div class="card-header">
+        <i class="fas fa-tasks"></i>
+        <h3>Today's Tasks</h3>
+      </div>
+      <div class="card-content">
+        <div class="info-row">
+          <span class="info-label">Total Tasks</span>
+          <span class="info-value" id="total">100</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Completed</span>
+          <span class="info-value" id="completed-card">0</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Remaining</span>
+          <span class="info-value" id="remaining-card">100</span>
+        </div>
+        
+        <div class="progress-container">
+          <div class="progress-header">
+            <span class="info-label">Task Progress</span>
+            <span class="info-value" id="progress-percent">0%</span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar" id="progress-bar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="card-header">
+        <i class="fas fa-chart-line"></i>
+        <h3>Earnings</h3>
+      </div>
+      <div class="card-content">
+        <div class="info-row">
+          <span class="info-label">Today's Earnings</span>
+          <span class="info-value">USD $<span id="todays-earning">0.000</span></span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Lifetime Earnings</span>
+          <span class="info-value">USD $<span id="lifetime-earning">0.000</span></span>
+        </div>
+        <div class="info-row">
+          <span class="info-label">Avg. per Task</span>
+          <span class="info-value">$0.025</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="card" id="withdraw" style="display:none;">
+      <div class="card-header">
+        <i class="fas fa-money-bill-wave"></i>
+        <h3>Withdraw Funds</h3>
+      </div>
+      <div class="card-content">
+        <div class="info-row">
+          <span class="info-label">Available Balance</span>
+          <span class="info-value">USD $<span id="available">0.000</span></span>
+        </div>
+        
+        <div class="input-group">
+          <label>Withdrawal Method</label>
+          <select>
+            <option>Select a method</option>
+            <option>Bkash $30</option>
+            <option>Nagad $30</option>
+            <option>Payeer $50</option>
+            <option>USDT (TRC20) $50</option>
+          </select>
+        </div>
+        
+        <div class="input-group">
+          <label>Amount (USD)</label>
+          <input type="text" id="withdraw-amount" placeholder="Enter amount">
+        </div>
+        
+        <div class="input-group">
+          <label>Withdrawal Address</label>
+          <input type="text" placeholder="Enter wallet address">
+        </div>
+        
+        <button class="button" onclick="submitWithdrawal()">
+          <i class="fas fa-paper-plane"></i> Submit Withdrawal
+        </button>
+      </div>
+    </div>
+    
+    <div class="card" id="earn" style="display:none;">
+      <div class="card-header">
+        <i class="fas fa-coins"></i>
+        <h3>Earn Money</h3>
+      </div>
+      <div class="card-content">
+        <p class="info-label" style="margin-bottom: 20px; text-align: center;">
+          <i class="fas fa-info-circle"></i> আপনি বিজ্ঞাপনগুলি দেখে উপার্জন করুন। টাস্কটি সম্পূর্ণ করতে ১৫ সেকেন্ড ads এ ঘুরাঘুরি করুন এবং প্রতি টাস্কে $0.025 উপার্জন করুন!
+        </p>
+        
+        <div class="task-counter">
+          <div class="counter-item">
+            <div class="counter-value" id="etotal">100</div>
+            <div class="counter-label">Total Tasks</div>
+          </div>
+          <div class="counter-item">
+            <div class="counter-value" id="ecompleted">0</div>
+            <div class="counter-label">Completed</div>
+          </div>
+          <div class="counter-item">
+            <div class="counter-value" id="eremaining">100</div>
+            <div class="counter-label">Remaining</div>
+          </div>
+        </div>
+        
+        <button class="button" onclick="startTask()">
+          <i class="fas fa-play"></i> Start Earning ▶
+        </button>
+        
+        <button class="button button-secondary" onclick="copyReferralLink()">
+          <i class="fas fa-user-plus"></i> Refer & Earn
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="nav">
+    <div class="nav-item active" id="nav-home" onclick="show('home')">
+      <div class="nav-icon">
+        <i class="fas fa-home"></i>
+      </div>
+      <div class="nav-label">Home</div>
+    </div>
+    <div class="nav-item" id="nav-earn" onclick="show('earn')">
+      <div class="nav-icon">
+        <i class="fas fa-coins"></i>
+      </div>
+      <div class="nav-label">Earn</div>
+    </div>
+    <div class="nav-item" id="nav-withdraw" onclick="show('withdraw')">
+      <div class="nav-icon">
+        <i class="fas fa-wallet"></i>
+      </div>
+      <div class="nav-label">Withdraw</div>
+    </div>
+    <div class="nav-item" id="nav-profile" onclick="show('home')">
+      <div class="nav-icon">
+        <i class="fas fa-user"></i>
+      </div>
+      <div class="nav-label">Profile</div>
+    </div>
+  </div>
+  
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script>
+    const tg = window.Telegram.WebApp;
+    const userId = tg.initDataUnsafe?.user?.id || Math.floor(Math.random() * 1000000);
+    const username = tg.initDataUnsafe?.user?.username || "Guest";
+    const ref = new URLSearchParams(window.location.search).get("start");
+ 
+    const today = new Date().toLocaleDateString();
+
+    let userData = JSON.parse(localStorage.getItem("MTEarningData")) || {
+      userId, username, referrals: 0, lifetimeEarning: 0
+    };
+
+    let data = JSON.parse(localStorage.getItem("dailyEarningData")) || {
+      date: today, completed: 0, remaining: 100, todaysEarning: 0
+    };
+
+    if (data.date !== today) {
+      data = { date: today, completed: 0, remaining: 100, todaysEarning: 0 };
+    }
+
+    if (ref && ref.startsWith("ref_")) {
+      const refId = ref.split("ref_")[1];
+      const referredUsers = JSON.parse(localStorage.getItem(`referrals_${refId}`)) || [];
+      if (!referredUsers.includes(userId)) {
+        referredUsers.push(userId);
+        localStorage.setItem(`referrals_${refId}`, JSON.stringify(referredUsers));
+        if (userId !== refId) {
+          const refCount = parseInt(localStorage.getItem(`ref_count_${refId}`) || "0");
+          localStorage.setItem(`ref_count_${refId}`, refCount + 1);
+        }
+      }
+    }
+
+    const refCount = parseInt(localStorage.getItem(`ref_count_${userId}`) || "0");
+    userData.referrals = refCount;
+
+    function updateStorage() {
+      localStorage.setItem("MTEarningData", JSON.stringify(userData));
+      localStorage.setItem("dailyEarningData", JSON.stringify(data));
+    }
+
+    function updateDisplay() {
+      document.getElementById("username").innerText = username;
+      document.getElementById("completed").innerText = data.completed;
+      document.getElementById("remaining").innerText = data.remaining;
+      document.getElementById("completed-card").innerText = data.completed;
+      document.getElementById("remaining-card").innerText = data.remaining;
+      document.getElementById("ecompleted").innerText = data.completed;
+      document.getElementById("eremaining").innerText = data.remaining;
+      document.getElementById("todays-earning").innerText = data.todaysEarning.toFixed(3);
+      document.getElementById("lifetime-earning").innerText = userData.lifetimeEarning.toFixed(3);
+      document.getElementById("usd-balance").innerText = "USD $" + userData.lifetimeEarning.toFixed(3);
+      document.getElementById("available").innerText = userData.lifetimeEarning.toFixed(3);
+      document.getElementById("header-balance").innerText = "$" + userData.lifetimeEarning.toFixed(3);
+      
+      // Update progress bar
+      const progressPercent = (data.completed / 100 * 100);
+      document.getElementById("progress-bar").style.width = progressPercent + "%";
+      document.getElementById("progress-percent").innerText = progressPercent.toFixed(0) + "%";
+      
+      document.getElementById("ref-count").innerText = userData.referrals;
+    }
+
+    const taskLinks = [
+      "https://www.profitableratecpm.com/xi12f9t2ka?key=b4d48b8bf0cc620cc6eaff47ec2bf989",
+      "https://otieu.com/4/9453951",
+      "https://www.profitableratecpm.com/uvhjwgzvvu?key=7d8eefe589a22bff00200aa016cdf4c5",
+      "https://otieu.com/4/9453932",
+      "https://www.profitableratecpm.com/kbdab1z3s?key=b5be9e22867bff3e30c2b62cf16912fb",
+      "https://otieu.com/4/9453944",
+      "https://www.profitableratecpm.com/y7my9aizec?key=0fd7a3fec9a14245c6c6195f254294db",
+      "https://otieu.com/4/9453955",
+      "https://www.profitableratecpm.com/ftpxujeri3?key=f2ea352cc8949e9314e7762abb19c1ab",
+      "https://otieu.com/4/9453941",
+      "https://www.profitableratecpm.com/xqu4056vbg?key=c56bd280d6af1bab103452830a1cfcff",
+      "https://otieu.com/4/9452846",
+      "https://www.profitableratecpm.com/ysqpjek5h?key=832387bbca524e7c22bb700085d23d49",
+      "https://otieu.com/4/9453948",
+      "https://www.profitableratecpm.com/yppak428s?key=9cfcbb64a76c0c153ff07b5dcf3c6025",
+      "https://otieu.com/4/9453954",
+      "https://www.profitableratecpm.com/f8iikei3?key=33119cb486103a46370813277eacf7d5",
+      "https://otieu.com/4/9453950",
+      "https://www.profitableratecpm.com/itk03buj?key=10d89b1e27b4f2c067fb264420de2a82",
+      "https://otieu.com/4/9453931",
+      "https://www.profitableratecpm.com/aceejemvu?key=fac70a57e2295cbed71bbfd848a9cb0e",
+      "https://otieu.com/4/9452846",
+      "https://www.profitableratecpm.com/fstpz6h3b?key=52099a2067c8f5ed7a76532ac1657396",
+      "https://otieu.com/4/9453952",
+      "https://www.profitableratecpm.com/yb78vf3e4?key=2b7b3e9a4c7f7f8bf37199e48361bd84",
+      "https://otieu.com/4/9453947",
+      "https://www.profitableratecpm.com/xi12f9t2ka?key=b4d48b8bf0cc620cc6eaff47ec2bf989",
+      "https://otieu.com/4/9453956",
+      "https://www.profitableratecpm.com/uvhjwgzvvu?key=7d8eefe589a22bff00200aa016cdf4c5",
+      "https://otieu.com/4/9453939",
+      "https://www.profitableratecpm.com/kbdab1z3s?key=b5be9e22867bff3e30c2b62cf16912fb",
+      "https://otieu.com/4/9453953",
+      "https://www.profitableratecpm.com/y7my9aizec?key=0fd7a3fec9a14245c6c6195f254294db",
+      "https://otieu.com/4/9453938",
+      "https://www.profitableratecpm.com/ftpxujeri3?key=f2ea352cc8949e9314e7762abb19c1ab",
+      "https://otieu.com/4/9453949",
+      "https://www.profitableratecpm.com/xqu4056vbg?key=c56bd280d6af1bab103452830a1cfcff",
+      "https://otieu.com/4/9453943",
+      "https://www.profitableratecpm.com/ysqpjek5h?key=832387bbca524e7c22bb700085d23d49",
+      "https://otieu.com/4/9453942",
+      "https://www.profitableratecpm.com/yppak428s?key=9cfcbb64a76c0c153ff07b5dcf3c6025",
+      "https://otieu.com/4/9453951",
+      "https://www.profitableratecpm.com/f8iikei3?key=33119cb486103a46370813277eacf7d5",
+      "https://otieu.com/4/9453932",
+      "https://www.profitableratecpm.com/itk03buj?key=10d89b1e27b4f2c067fb264420de2a82",
+      "https://otieu.com/4/9453944",
+      "https://www.profitableratecpm.com/aceejemvu?key=fac70a57e2295cbed71bbfd848a9cb0e",
+      "https://otieu.com/4/9453955",
+      "https://www.profitableratecpm.com/fstpz6h3b?key=52099a2067c8f5ed7a76532ac1657396",
+      "https://otieu.com/4/9453941",
+      "https://www.profitableratecpm.com/yb78vf3e4?key=2b7b3e9a4c7f7f8bf37199e48361bd84",
+      "https://otieu.com/4/9453945",
+      "https://www.profitableratecpm.com/xi12f9t2ka?key=b4d48b8bf0cc620cc6eaff47ec2bf989",
+      "https://otieu.com/4/9453948",
+      "https://www.profitableratecpm.com/uvhjwgzvvu?key=7d8eefe589a22bff00200aa016cdf4c5",
+      "https://otieu.com/4/9453954",
+      "https://www.profitableratecpm.com/kbdab1z3s?key=b5be9e22867bff3e30c2b62cf16912fb",
+      "https://otieu.com/4/9453950",
+      "https://www.profitableratecpm.com/y7my9aizec?key=0fd7a3fec9a14245c6c6195f254294db",
+      "https://otieu.com/4/9453931",
+      "https://www.profitableratecpm.com/ftpxujeri3?key=f2ea352cc8949e9314e7762abb19c1ab",
+      "https://otieu.com/4/9452846",
+      "https://www.profitableratecpm.com/xqu4056vbg?key=c56bd280d6af1bab103452830a1cfcff",
+      "https://otieu.com/4/9453952",
+      "https://www.profitableratecpm.com/ysqpjek5h?key=832387bbca524e7c22bb700085d23d49",
+      "https://otieu.com/4/9453947",
+      "https://www.profitableratecpm.com/yppak428s?key=9cfcbb64a76c0c153ff07b5dcf3c6025",
+      "https://otieu.com/4/9453956",
+      "https://www.profitableratecpm.com/f8iikei3?key=33119cb486103a46370813277eacf7d5",
+      "https://otieu.com/4/9453939",
+      "https://www.profitableratecpm.com/itk03buj?key=10d89b1e27b4f2c067fb264420de2a82",
+      "https://otieu.com/4/9453953",
+      "https://www.profitableratecpm.com/aceejemvu?key=fac70a57e2295cbed71bbfd848a9cb0e",
+      "https://otieu.com/4/9453938",
+      "https://www.profitableratecpm.com/fstpz6h3b?key=52099a2067c8f5ed7a76532ac1657396",
+      "https://otieu.com/4/9453949",
+      "https://www.profitableratecpm.com/yb78vf3e4?key=2b7b3e9a4c7f7f8bf37199e48361bd84",
+      "https://otieu.com/4/9453943",
+      "https://www.profitableratecpm.com/xi12f9t2ka?key=b4d48b8bf0cc620cc6eaff47ec2bf989",
+      "https://otieu.com/4/9453942",
+      "https://www.profitableratecpm.com/kbdab1z3s?key=b5be9e22867bff3e30c2b62cf16912fb",
+      "https://otieu.com/4/9453942",
+      "https://www.profitableratecpm.com/kbdab1z3s?key=b5be9e22867bff3e30c2b62cf16912fb",
+      "https://otieu.com/4/9453932",
+      "https://www.profitableratecpm.com/y7my9aizec?key=0fd7a3fec9a14245c6c6195f254294db",
+      "https://otieu.com/4/9453944",
+      "https://www.profitableratecpm.com/ftpxujeri3?key=f2ea352cc8949e9314e7762abb19c1ab",
+      "https://otieu.com/4/9453955",
+      "https://www.profitableratecpm.com/xqu4056vbg?key=c56bd280d6af1bab103452830a1cfcff",
+      "https://otieu.com/4/9453941",
+      "https://www.profitableratecpm.com/ysqpjek5h?key=832387bbca524e7c22bb700085d23d49",
+      "https://otieu.com/4/9453945",
+      "https://www.profitableratecpm.com/yppak428s?key=9cfcbb64a76c0c153ff07b5dcf3c6025",
+      "https://otieu.com/4/9453948",
+      "https://www.profitableratecpm.com/f8iikei3?key=33119cb486103a46370813277eacf7d5",
+      "https://otieu.com/4/9453954",
+      "https://www.profitableratecpm.com/itk03buj?key=10d89b1e27b4f2c067fb264420de2a82",
+      "https://otieu.com/4/9453950",
+      "https://www.profitableratecpm.com/aceejemvu?key=fac70a57e2295cbed71bbfd848a9cb0e",
+      "https://otieu.com/4/9453931",
+      "https://www.profitableratecpm.com/fstpz6h3b?key=52099a2067c8f5ed7a76532ac1657396"
+    ];
+
+    function startTask() {
+      if (data.completed >= 100) return alert("You have completed all tasks for today!");
+      const start = Date.now();
+      const ad = window.open(taskLinks[data.completed], "_blank");
+      const check = setInterval(() => {
+        if (ad.closed) {
+          clearInterval(check);
+          const duration = (Date.now() - start) / 1000;
+          if (duration >= 15) {
+            data.completed++;
+            data.remaining--;
+            data.todaysEarning += 0.025;
+            userData.lifetimeEarning += 0.025;
+            updateStorage();
+            updateDisplay();
+            alert("✅ Task completed! $0.025 added.");
+          } else {
+            alert("⏱️ আপনাকে অবশ্যই কমপক্ষে 15 সেকেন্ডের জন্য বিজ্ঞাপনটি দেখতে হবে!");
+          }
+        }
+      }, 500);
+    }
+
+    function submitWithdrawal() {
+      const amount = parseFloat(document.getElementById("withdraw-amount").value);
+      if (isNaN(amount) return alert("Please enter a valid amount.");
+      if (amount < 30) return alert("You need at least $30 to withdraw.");
+      if (amount > userData.lifetimeEarning) return alert("Insufficient balance.");
+      if (userData.referrals < 10) return alert("আপনার এখনো ১০টি রেফার হয়নি! প্রথম বার পেমেন্ট নিতে হলে কমপক্ষে ১০টি রেফারেল দরকার।");
+      
+      // Update balance
+      userData.lifetimeEarning -= amount;
+      updateStorage();
+      updateDisplay();
+      alert("Withdrawal request submitted successfully! It will be processed within 24-48 hours.");
+    }
+
+    function show(section) {
+      document.querySelector('.profile-container').style.display = section === 'home' ? 'block' : 'none';
+      
+      // Hide all cards first
+      document.querySelectorAll('.card').forEach(card => {
+        card.style.display = 'none';
+      });
+      
+      // Show appropriate cards
+      if (section === 'home') {
+        document.querySelectorAll('.card').forEach((card, index) => {
+          if (index < 2) card.style.display = 'block';
+        });
+      } else {
+        document.getElementById(section).style.display = 'block';
+      }
+      
+      // Update navigation
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      document.getElementById("nav-" + section).classList.add('active');
+    }
+
+    function copyReferralLink() {
+      const refLink = `https://t.me/Daily_Earning_545_Bot?start=ref_${userId}`;
+      navigator.clipboard.writeText(refLink)
+        .then(() => alert("✅ আপনার রেফার লিংক কপি করা হয়েছে! প্রতি রেফারে পাবেন $1 ডলার। 👫 রেফার করে অল্প সময়ে বেশি ইনকাম করতে চাইলে আপনার বন্ধুদের রেফার লিংক শেয়ার করুন অথবা Facebook এর ইনকাম Group গুলোর পোস্টের কমেন্ট বক্সে আপনার লিংক পেস্ট করুন!"))
+        .catch(() => alert("Failed to copy link."));
+    }
+
+    updateDisplay();
+    updateStorage();
+  </script>
 </body>
 </html>
